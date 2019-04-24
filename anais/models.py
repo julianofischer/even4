@@ -5,6 +5,10 @@ from django.db import models
 class AreaTematica(models.Model):
     nome = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name = "área temática"
+        verbose_name_plural = "áreas temáticas"
+
 #banner, resumo, artigo completo ...
 class Modalidade(models.Model):
         nome = models.CharField(max_length=100)
@@ -31,6 +35,9 @@ class Anais(models.Model):
     pais_de_publicacao = models.CharField(max_length=100)#país
     idioma_de_publicacao = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name_plural = 'anais'
+
 class Trabalho(models.Model):
     titulo = models.CharField(max_length=200)
     autores = models.ManyToManyField('Autor')
@@ -47,8 +54,22 @@ class Afiliacao(models.Model):
     estado = models.CharField(max_length=200)
     pais = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.sigla
+
+    class Meta:
+        verbose_name = 'afiliação'
+        verbose_name_plural = 'afiliações'
+
 class Autor(models.Model):
     nome = models.CharField(max_length=200)
     nome_para_citacao = models.CharField(max_length=100)
     contato = models.EmailField()
     afiliacao = models.ForeignKey(Afiliacao, related_name='autores', on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.nome
+        
+    class Meta:
+        verbose_name_plural = 'autores'
+        ordering = ['afiliacao', 'nome']
