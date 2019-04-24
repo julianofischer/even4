@@ -23,10 +23,13 @@ class Evento(models.Model):
     areas_tematicas = models.ManyToManyField(AreaTematica)
     contato = models.CharField(max_length=200)
     #edicoes_anteriores
-    edicao_anterior = models.OneToOneField('Evento', null=True, on_delete=models.SET_NULL)
-    anais = models.OneToOneField('Anais', null=True, on_delete=models.CASCADE)
+    edicao_anterior = models.OneToOneField('Evento', null=True, on_delete=models.SET_NULL, blank=True)
+    anais = models.OneToOneField('Anais', null=True, on_delete=models.CASCADE, blank=True)
     icone = models.ImageField(upload_to='images/')
     banner = models.ImageField(upload_to='images/')
+
+    def __str__(self):
+        return self.titulo
 
 class Anais(models.Model):
     titulo = models.CharField(max_length=200)
@@ -69,7 +72,7 @@ class Autor(models.Model):
 
     def __str__(self):
         return self.nome
-        
+
     class Meta:
         verbose_name_plural = 'autores'
         ordering = ['afiliacao', 'nome']

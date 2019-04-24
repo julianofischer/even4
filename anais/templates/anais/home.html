@@ -4,6 +4,55 @@
 Página Home
 {% endblock %}
 
-{% block body %}
-Novo body <br/>
+{% block content %}
+<div class="d-flex justify-content-between container pt-2 pb-2">
+  <h2>Anais de Eventos</h2>
+  <h4 class="text-primary">Criar um evento</h4>
+</div>
+
+  <div class="d-flex flex-row-reverse pb-3">
+    <input type="text" class="form-control col-sm-4" placeholder="Busque por título ou ISBN">
+  </div>
+
+<div class="containter">
+  <div class="row">
+    {% for evento in eventos %}
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <img src="{{ evento.icone.url }}"class="card-img-top" alt="Imagem referente ao evento.">
+        <div class="card-body">
+          <hr/>
+          <h6>{{ evento.titulo }}</h6>
+          <p class="card-text text-muted">{{ evento.local }}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="d-flex justify-content-center">
+  <!-- <nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav> -->
+
+  <nav aria-label="Page navigation example">
+  <ul class="pagination">
+      {% if eventos.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page=1">Primeira</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ events.previous_page_number }}">Anterior</a></li>
+      {% endif %}
+      {% if eventos.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{ eventos.next_page_number }}">Próxima</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ eventos.paginator.num_pages }}">Última</a></li>
+      {% endif %}
+  </ul>
+  </nav>
+</div>
 {% endblock %}
