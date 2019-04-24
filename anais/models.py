@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils.text import slugify
+import random
 
 # Create your models here.
 # models: Evento, Trabalho, Autor, Área Temática
@@ -27,6 +29,8 @@ class Evento(models.Model):
     anais = models.OneToOneField('Anais', null=True, on_delete=models.CASCADE, blank=True)
     icone = models.ImageField(upload_to='images/')
     banner = models.ImageField(upload_to='images/')
+
+    slug = models.SlugField(unique=True, default=slugify(titulo), editable=False)
 
     def __str__(self):
         return self.titulo
