@@ -5,13 +5,13 @@ from django.db import models
 class AreaTematica(models.Model):
     nome = models.CharField(max_length=100)
 
+#banner, resumo, artigo completo ...
 class Modalidade(models.Model):
         nome = models.CharField(max_length=100)
 
 class Evento(models.Model):
     titulo = models.CharField(max_length=200)
     local = models.CharField(max_length=200)
-    data_de_publicação = models.DateField(auto_now_add=True)
     apresentação = models.TextField()
     #corpo editorial (comissão científica e comissão organizadora)
     comissao_organizadora = models.TextField()
@@ -19,16 +19,17 @@ class Evento(models.Model):
     areas_tematicas = models.ManyToManyField(AreaTematica)
     contato = models.CharField(max_length=200)
     #edicoes_anteriores
-    edicao_anterior = models.ForeignKey('Evento', null=True, related_name='proxima_edicao', on_delete=models.SET_NULL)
-
+    edicao_anterior = models.OneToOneField('Evento', null=True, on_delete=models.SET_NULL)
+    anais = models.OneToOneField('Anais', null=True, on_delete=models.CASCADE)
+    icone = models.ImageField(upload_to='images/')
+    banner = models.ImageField(upload_to='images/')
 
 class Anais(models.Model):
     titulo = models.CharField(max_length=200)
     isbn = models.CharField(max_length=17)
     data_de_publicacao = models.DateField()
-    pais_de_publicacao = models.CharField(max_length=100)
+    pais_de_publicacao = models.CharField(max_length=100)#país
     idioma_de_publicacao = models.CharField(max_length=100)
-
 
 class Trabalho(models.Model):
     titulo = models.CharField(max_length=200)

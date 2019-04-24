@@ -4,3 +4,5 @@ from django.shortcuts import render
 # home (eventos)
 # evento (details)
 # trabalhos (trabalhos details)
+def home(request):
+    return render(request, 'anais/home.html')
