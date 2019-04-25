@@ -6,13 +6,19 @@ from django.utils.text import slugify
 class AreaTematica(models.Model):
     nome = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.nome
+
     class Meta:
         verbose_name = "área temática"
         verbose_name_plural = "áreas temáticas"
 
 #banner, resumo, artigo completo ...
 class Modalidade(models.Model):
-        nome = models.CharField(max_length=100)
+    nome = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nome
 
 class Evento(models.Model):
     titulo = models.CharField(max_length=200)
@@ -45,6 +51,9 @@ class Anais(models.Model):
     pais_de_publicacao = models.CharField(max_length=100)#país
     idioma_de_publicacao = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.titulo
+
     class Meta:
         verbose_name_plural = 'anais'
 
@@ -56,6 +65,14 @@ class Trabalho(models.Model):
     url = models.CharField(max_length=200, null=True)
     anais = models.ForeignKey(Anais, related_name='trabalhos', on_delete=models.SET_NULL, null=True)
     pdf = models.FileField(upload_to='uploads/%Y/')
+
+
+    def lista_autores(self):
+        s = "; ".join([autor.get_name_with_affiliation() for autor in self.autores.all()])
+        return s
+
+    def __str__(self):
+        return self.titulo
 
 class Afiliacao(models.Model):
     nome = models.CharField(max_length=200)
@@ -79,6 +96,11 @@ class Autor(models.Model):
 
     def __str__(self):
         return self.nome
+
+    def get_name_with_affiliation(self):
+        name = self.nome
+        aff = self.afiliacao.sigla
+        return f"{name} ({aff})"
 
     class Meta:
         verbose_name_plural = 'autores'

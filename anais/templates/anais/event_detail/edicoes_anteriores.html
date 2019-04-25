@@ -1,0 +1,20 @@
+<div class="container pt-4 pl-4">
+  <h4>Edições Anteriores</h4>
+  <hr>
+  <div class="row">
+    {% for edicao in edicoes_anteriores %}
+    <div class="col-md-3">
+      <div class="card mb-4 shadow">
+        <img src="{{ evento.icone.url }}"class="card-img-top" alt="Imagem referente ao evento.">
+        <div class="card-body">
+          <hr/>
+          <h6>{{ evento.titulo }}</h6>
+          <p class="card-text text-muted">{{ evento.local }}</p>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="pb-3 pl-4">Nenhum evento anterior cadastrado.</div>
+    {% endfor %}
+  </div>
+</div>

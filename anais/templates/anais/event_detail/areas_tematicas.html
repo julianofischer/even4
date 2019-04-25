@@ -1,0 +1,9 @@
+<div class="container pt-4 pl-4">
+<h4>Áreas Temáticas</h4>
+<hr>
+<ul>
+{% for area in evento.areas_tematicas.all %}
+  <li>{{ area.nome }}</li>
+{% endfor %}
+</ul>
+</div>

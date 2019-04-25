@@ -20,4 +20,10 @@ def event_detail(request, slug=None, pk=None):
     else:
         evento = get_object_or_404(Evento, pk=pk)
 
-    return render(request, 'anais/event_detail.html', {'evento':evento})
+    edicoes_anteriores = []
+    e = evento
+    while e.edicao_anterior is not None:
+        e = e.edicao_anterior
+        edicoes_anteriores.append(e)
+
+    return render(request, 'anais/event_detail.html', {'evento':evento, 'edicoes_anteriores':edicoes_anteriores})
