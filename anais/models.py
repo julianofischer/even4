@@ -74,6 +74,12 @@ class Trabalho(models.Model):
     def __str__(self):
         return self.titulo
 
+    slug = models.SlugField(unique=True, editable=False, null=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.titulo)
+        super(Trabalho, self).save(*args, **kwargs)
+
 class Afiliacao(models.Model):
     nome = models.CharField(max_length=200)
     sigla = models.CharField(max_length=100)

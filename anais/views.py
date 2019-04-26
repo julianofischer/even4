@@ -27,3 +27,8 @@ def event_detail(request, slug=None, pk=None):
         edicoes_anteriores.append(e)
 
     return render(request, 'anais/event_detail.html', {'evento':evento, 'edicoes_anteriores':edicoes_anteriores})
+
+
+def trabalho_detail(request, slug_trab, slug_evento):
+    evento = get_object_or_404(Evento, slug=slug_evento)
+    return render(request, 'anais/trabalho_detail.html', {'evento':evento})
