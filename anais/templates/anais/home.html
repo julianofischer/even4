@@ -20,6 +20,7 @@ Página Home
   <div class="row">
     {% for evento in eventos %}
     <div class="col-md-4">
+      <a href="{% url 'eventoslug' evento.slug %}">
       <div class="card mb-4 shadow">
         <img src="{{ evento.icone.url }}"class="card-img-top" alt="Imagem referente ao evento.">
         <div class="card-body">
@@ -28,6 +29,7 @@ Página Home
           <p class="card-text text-muted">{{ evento.local }}</p>
         </div>
       </div>
+    </a>
     </div>
     {% endfor %}
   </div>
