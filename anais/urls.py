@@ -6,5 +6,6 @@ urlpatterns = [
     path('evento/<int:pk>', event_detail),
     path('evento/<str:slug>', event_detail, name='eventoslug' ),
     path('trabalhos/<str:slug_evento>/<str:slug_trab>/', trabalho_detail, name='trabalho_detail' ),
-    path('ajax-search/<str:search_string>', home_ajax_search)
+    path('ajax-search/<str:search_string>', home_ajax_search),
+    path('ajax-search/', home_ajax_search)
 ]

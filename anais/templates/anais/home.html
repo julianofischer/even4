@@ -6,55 +6,38 @@ Página Home
 
 {% block content %}
 <script type='text/javascript'>
-  function replaceEventos(respostaJson){
-      $('.col-md-4').remove();
-  }
-
   $(document).ready(function(){
 
     $('#texttarget').keyup(function(){
-
+      httpRequest = new XMLHttpRequest();
       var texto = $('#texttarget').val();
-      fetch('ajax-search/'+texto)
-      .then(function(response) {
-          replaceEventos(response);
-      })
-      //$.get('/ajax_search/' + texto, function(resposta){
-      // Na variável resposta estará o retorno da sua view
-    //alert(resposta);
-  });
+        httpRequest.onreadystatechange = function(){
+          if (httpRequest.readyState === 4) {
+            if (httpRequest.status === 200) {
+              $("#ajaxcontent").html(httpRequest.responseText);
+            }
+          }
+        };
+        httpRequest.open('GET', '/ajax-search/'+texto, true);
+        console.log(httpRequest);
+        httpRequest.send(null);
+      });
     });
-</script>
+  </script>
 
-<div class="container">
-  <div class="d-flex justify-content-between container pt-2 pb-2">
-    <h2>Anais de Eventos</h2>
-    <h4 class="text-primary">Criar um evento</h4>
+  <div class="container">
+    <div class="d-flex justify-content-between container pt-2 pb-2">
+      <h2>Anais de Eventos</h2>
+      <h4 class="text-primary">Criar um evento</h4>
+    </div>
+
+    <div class="d-flex flex-row-reverse pb-3">
+      <input id="texttarget" type="text" class="form-control col-sm-4" placeholder="Busque por título ou ISBN">
+    </div>
   </div>
 
-  <div class="d-flex flex-row-reverse pb-3">
-    <input id="texttarget" type="text" class="form-control col-sm-4" placeholder="Busque por título ou ISBN">
-  </div>
-</div>
-
-<div class="container">
-  <div class="row">
+  <div id="ajaxcontent">
     {% include 'anais/home/eventos.html' %}
   </div>
-</div>
 
-<div class="d-flex justify-content-center">
-<nav aria-label="Page navigation example">
-  <ul class="pagination">
-    {% if eventos.has_previous %}
-    <li class="page-item"><a class="page-link" href="?page=1">Primeira</a></li>
-    <li class="page-item"><a class="page-link" href="?page={{ events.previous_page_number }}">Anterior</a></li>
-    {% endif %}
-    {% if eventos.has_next %}
-    <li class="page-item"><a class="page-link" href="?page={{ eventos.next_page_number }}">Próxima</a></li>
-    <li class="page-item"><a class="page-link" href="?page={{ eventos.paginator.num_pages }}">Última</a></li>
-    {% endif %}
-  </ul>
-</nav>
-</div>
-{% endblock %}
+  {% endblock %}

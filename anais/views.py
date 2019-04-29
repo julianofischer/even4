@@ -35,10 +35,15 @@ def event_detail(request, slug=None, pk=None):
 
     return render(request, 'anais/event_detail.html', {'evento':evento, 'edicoes_anteriores':edicoes_anteriores})
 
-def home_ajax_search(request, search_string):
-    eventos = Evento.objects.filter(titulo__icontains=search_string)
-    serialized = serializers.serialize('json', eventos, cls=DjangoJSONEncoder)
-    return HttpResponse(serialized, content_type='application/json')
+def home_ajax_search(request, search_string=None):
+    if search_string is None:
+        eventos = Evento.objects.all()
+    else:
+        eventos = Evento.objects.filter(titulo__icontains=search_string)
+    paginator = Paginator(eventos, 9)
+    page = request.GET.get('page')
+    eventos = paginator.get_page(page)
+    return render(request, 'anais/home/eventos.html', {'eventos':eventos})
 
 
 def trabalho_detail(request, slug_trab, slug_evento):
