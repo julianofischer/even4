@@ -5,6 +5,27 @@ Página Home
 {% endblock %}
 
 {% block content %}
+<script type='text/javascript'>
+  function replaceEventos(respostaJson){
+      $('.col-md-4').remove();
+  }
+
+  $(document).ready(function(){
+
+    $('#texttarget').keyup(function(){
+
+      var texto = $('#texttarget').val();
+      fetch('ajax-search/'+texto)
+      .then(function(response) {
+          replaceEventos(response);
+      })
+      //$.get('/ajax_search/' + texto, function(resposta){
+      // Na variável resposta estará o retorno da sua view
+    //alert(resposta);
+  });
+    });
+</script>
+
 <div class="container">
   <div class="d-flex justify-content-between container pt-2 pb-2">
     <h2>Anais de Eventos</h2>
@@ -12,40 +33,17 @@ Página Home
   </div>
 
   <div class="d-flex flex-row-reverse pb-3">
-    <input type="text" class="form-control col-sm-4" placeholder="Busque por título ou ISBN">
+    <input id="texttarget" type="text" class="form-control col-sm-4" placeholder="Busque por título ou ISBN">
   </div>
 </div>
 
 <div class="container">
   <div class="row">
-    {% for evento in eventos %}
-    <div class="col-md-4">
-      <a href="{% url 'eventoslug' evento.slug %}">
-      <div class="card mb-4 shadow">
-        <img src="{{ evento.icone.url }}"class="card-img-top" alt="Imagem referente ao evento.">
-        <div class="card-body">
-          <hr/>
-          <h6>{{ evento.titulo }}</h6>
-          <p class="card-text text-muted">{{ evento.local }}</p>
-        </div>
-      </div>
-    </a>
-    </div>
-    {% endfor %}
+    {% include 'anais/home/eventos.html' %}
   </div>
 </div>
 
 <div class="d-flex justify-content-center">
-  <!-- <nav aria-label="Page navigation example">
-  <ul class="pagination">
-  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-  <li class="page-item"><a class="page-link" href="#">1</a></li>
-  <li class="page-item"><a class="page-link" href="#">2</a></li>
-  <li class="page-item"><a class="page-link" href="#">3</a></li>
-  <li class="page-item"><a class="page-link" href="#">Next</a></li>
-</ul>
-</nav> -->
-
 <nav aria-label="Page navigation example">
   <ul class="pagination">
     {% if eventos.has_previous %}

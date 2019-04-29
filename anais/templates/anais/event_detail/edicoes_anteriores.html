@@ -4,6 +4,7 @@
   <div class="row">
     {% for edicao in edicoes_anteriores %}
     <div class="col-md-3">
+      <a href="{% url 'eventoslug' edicao.slug %}">
       <div class="card mb-4 shadow">
         <img src="{{ evento.icone.url }}"class="card-img-top" alt="Imagem referente ao evento.">
         <div class="card-body">
@@ -12,6 +13,7 @@
           <p class="card-text text-muted">{{ edicao.local }}</p>
         </div>
       </div>
+      </a>
     </div>
     {% empty %}
     <div class="pb-3 pl-4">Nenhum evento anterior cadastrado.</div>

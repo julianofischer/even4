@@ -1,10 +1,12 @@
-<table class="table table-hover table-striped table-light">
+<table class="table table-hover table-striped table-light" data-link="row">
   <tbody>
     {% for trabalho in evento.anais.trabalhos.all %}
     <tr>
       <td>
+        <a href="{% url 'trabalho_detail' evento.slug trabalho.slug %}"<a/>
         <h6>{{ trabalho.titulo|upper }}</h6>
         {{ trabalho.lista_autores }}
+        <a/>
       </td>
     </tr>
     {% endfor %}

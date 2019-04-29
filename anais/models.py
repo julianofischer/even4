@@ -65,6 +65,7 @@ class Trabalho(models.Model):
     url = models.CharField(max_length=200, null=True)
     anais = models.ForeignKey(Anais, related_name='trabalhos', on_delete=models.SET_NULL, null=True)
     pdf = models.FileField(upload_to='uploads/%Y/')
+    slug = models.SlugField(unique=True, editable=False, null=True)
 
 
     def lista_autores(self):
@@ -73,8 +74,6 @@ class Trabalho(models.Model):
 
     def __str__(self):
         return self.titulo
-
-    slug = models.SlugField(unique=True, editable=False, null=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.titulo)
