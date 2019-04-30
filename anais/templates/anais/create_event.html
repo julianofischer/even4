@@ -1,0 +1,104 @@
+{% extends 'anais/base.html' %}
+
+{% block title %}
+Criar um novo evento
+{% endblock %}
+
+{% block content %}
+
+{% if saved %}
+<div class="alert alert-success container mt-4" role="alert">
+   O evento foi salvo com sucesso!
+</div>
+{% endif %}
+
+<form method="post" enctype="multipart/form-data"> {% csrf_token %}
+  <div class="container mt-3 mb-3">
+    <h2>Informações sobre o evento</h2>
+    <hr/>
+    <div class="form-group">
+      <label for="titulo-evento">Título</label>
+      <input type="text" class="form-control" id="titulo-evento" name="titulo-evento" placeholder="Digite o título do evento"/>
+    </div>
+    <div class="form-group">
+      <label for="local-evento">Local</label>
+      <input type="text" class="form-control" id="local-evento" name="local-evento" placeholder="Digite o local do evento"/>
+    </div>
+    <div class="form-group">
+      <label for="apresentacao-evento">Apresentação</label>
+      <textarea class="form-control" id="apresentacao-evento" name="apresentacao-evento" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="comissao-organizadora-evento">Comissão Organizadora</label>
+      <textarea class="form-control" id="comissao-organizadora-evento" name="comissao-organizadora-evento" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="comissao-cientifica-evento">Comissão Científica</label>
+      <textarea class="form-control" id="comissao-cientifica-evento" name="comissao-cientifica-evento" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="areas-tematicas">Áreas Temáticas</label>
+      <select multiple class="form-control" id="areas-tematicas" name="areas-tematicas">
+        {% for area in areas_tematicas %}
+        <option value="{{area.pk}}">{{ area }}</option>
+        {% endfor %}
+      </select>
+      <small class="form-text text-muted">Você pode selecionar múltiplas áreas temáticas para o evento.</small>
+    </div>
+
+    <div class="form-group">
+      <label for="contato-evento">E-mail para contato</label>
+      <input type="email" class="form-control" id="contato-evento" name="contato-evento" placeholder="Digite o e-mail para contato"/>
+    </div>
+
+    <div class="form-group">
+      <label for="evento-anterior">Evento anterior</label>
+      <select class="form-control" id="evento-anterior" name="evento-anterior">
+        {% for evento in eventos %}
+        <option value="{{evento.pk}}"> {{evento}} </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="file-icone">Ícone</label>
+      <input type="file" class="form-control-file" id="file-icone" name="file-icone">
+    </div>
+
+    <div class="form-group">
+      <label for="file-banner">Banner</label>
+      <input type="file" class="form-control-file" id="file-banner" name="file-banner">
+    </div>
+
+
+    <h2>Informações sobre os Anais do Evento</h2>
+    <hr/>
+    <div class="form-group">
+      <label for="titulo-anais">Título</label>
+      <input type="text" class="form-control" id="titulo-anais" name="titulo-anais" placeholder="Digite o título dos Anais do Evento"/>
+    </div>
+
+    <div class="form-group">
+      <label for="titulo-anais">ISBN</label>
+      <input type="text" class="form-control" id="isbn-anais" name="isbn-anais" placeholder="ISBN"/>
+    </div>
+
+    <div class="form-group">
+      <label for="pais-anais">País de publicação</label>
+      <input type="text" class="form-control" id="pais-anais" name="pais-anais" placeholder="País de publicação"/>
+    </div>
+
+    <div class="form-group">
+      <label for="idioma-anais">Idioma de publicação</label>
+      <input type="text" class="form-control" id="idioma-anais" name="idioma-anais" placeholder="Idioma de publicação"/>
+    </div>
+
+    <div class="form-group">
+      <label for="idioma-anais">Data de publicação</label>
+      <input type="date" class="form-control" id="data-anais" name="data-anais" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+  </form>
+</div>
+{% endblock %}

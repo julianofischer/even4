@@ -21,3 +21,4 @@ class AnaisAdmin(admin.ModelAdmin):
 
 admin.site.register(Autor, AutorAdmin)
 admin.site.register(Anais, AnaisAdmin)
+admin.site.register(Evento)
