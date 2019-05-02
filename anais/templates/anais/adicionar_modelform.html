@@ -1,0 +1,32 @@
+{% extends 'anais/base.html' %}
+
+{% block title %}
+Criar um novo evento
+{% endblock %}
+
+{% block content %}
+
+{% if saved %}
+<div class="alert alert-success container mt-4" role="alert">
+   O evento foi salvo com sucesso!
+</div>
+{% endif %}
+
+<form method="post" enctype="multipart/form-data"> {% csrf_token %}
+  <div class="container mt-3 mb-3">
+    {% if evento_form.errors %}
+    {{ evento_form.errors }}
+    {% endif %}
+    <h2>Informações sobre o evento</h2>
+    <hr/>
+    {{ evento_form.as_p }}
+    <h2>Informações sobre os Anais do Evento</h2>
+    <hr/>
+    {% if anais_form.errors %}
+    {{ anais_form.errors }}
+    {% endif %}
+    {{ anais_form.as_p }}
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+  </form>
+</div>
+{% endblock %}

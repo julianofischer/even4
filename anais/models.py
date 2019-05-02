@@ -21,13 +21,13 @@ class Modalidade(models.Model):
         return self.nome
 
 class Evento(models.Model):
-    titulo = models.CharField(max_length=200)
+    titulo = models.CharField(max_length=200, verbose_name="Título")
     local = models.CharField(max_length=200)
     apresentação = models.TextField()
     #corpo editorial (comissão científica e comissão organizadora)
-    comissao_organizadora = models.TextField()
-    comissao_cientifica = models.TextField()
-    areas_tematicas = models.ManyToManyField(AreaTematica)
+    comissao_organizadora = models.TextField(verbose_name="Comissão Organizadora")
+    comissao_cientifica = models.TextField(verbose_name="Comissão Científica")
+    areas_tematicas = models.ManyToManyField(AreaTematica, help_text="Você pode selecionar várias áreas temáticas")
     contato = models.CharField(max_length=200)
     #edicoes_anteriores
     edicao_anterior = models.OneToOneField('Evento', null=True, on_delete=models.SET_NULL, blank=True)

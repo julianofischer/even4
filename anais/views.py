@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from django.core.paginator import Paginator
 from .models import Evento, Trabalho, AreaTematica, Anais
 from django.http import HttpResponse
@@ -118,3 +118,44 @@ def adicionar_evento(request):
     areas_tematicas = AreaTematica.objects.all()
     contexto = {'eventos':eventos, 'areas_tematicas':areas_tematicas, 'saved':saved}
     return render(request, 'anais/create_event.html', contexto)
+
+from .forms import AnaisForm, EventoForm
+def adicionar_modelform(request):
+    if request.method == 'POST':
+        anais_form = AnaisForm(request.POST)
+        evento_form = EventoForm(request.POST, request.FILES)
+        if anais_form.is_valid() and evento_form.is_valid():
+            anais_model = anais_form.save(commit=False)
+            evento_model = evento_form.save(commit=False)
+            anais_model.save()
+            evento_model.anais = anais_model
+            evento_model.save()
+            return redirect('/')
+        else:
+            context = {'anais_form':anais_form, 'evento_form':evento_form}
+            return render(request, 'anais/adicionar_modelform.html', context)
+    else:
+        anais_form = AnaisForm()
+        evento_form = EventoForm()
+        context = {'anais_form':anais_form, 'evento_form':evento_form}
+        return render(request, 'anais/adicionar_modelform.html', context)
+
+def adicionar_modelform(request):
+    if request.method == 'POST':
+        anais_form = AnaisForm(request.POST)
+        evento_form = EventoForm(request.POST, request.FILES)
+        if anais_form.is_valid() and evento_form.is_valid():
+            anais_model = anais_form.save(commit=False)
+            evento_model = evento_form.save(commit=False)
+            anais_model.save()
+            evento_model.anais = anais_model
+            evento_model.save()
+            return redirect('/')
+        else:
+            context = {'anais_form':anais_form, 'evento_form':evento_form}
+            return render(request, 'anais/adicionar_modelform2.html', context)
+    else:
+        anais_form = AnaisForm()
+        evento_form = EventoForm()
+        context = {'anais_form':anais_form, 'evento_form':evento_form}
+        return render(request, 'anais/adicionar_modelform2.html', context)

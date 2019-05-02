@@ -1,0 +1,43 @@
+{% extends 'anais/base.html' %}
+
+{% block title %}
+Criar um novo evento
+{% endblock %}
+
+{% block content %}
+
+{% if evento_form.errors or anais_form.errors %}
+<div class="alert alert-danger container mt-4" role="alert">
+   O formulário possui erros.
+</div>
+{% endif %}
+
+<form method="post" enctype="multipart/form-data"> {% csrf_token %}
+  <div class="container mt-3 mb-3">
+    <h2>Informações sobre o evento</h2>
+    <hr/>
+
+    {% for field in evento_form.visible_fields %}
+      <div class="form-group">
+        <label for="titulo-evento">{{ field.label_tag }}</label>
+        <small class="form-text text-danger">{{ field.errors }}</small>
+        {{ field }}
+        <small class="form-text text-muted">{{ field.help_text }}</small>
+      </div>
+    {% endfor %}
+
+    <h2>Informações sobre os Anais do Evento</h2>
+    <hr/>
+    {% for field in anais_form.visible_fields %}
+      <div class="form-group">
+        <label for="titulo-evento">{{ field.label_tag }}</label>
+        <small class="form-text text-danger">{{ field.errors }}</small>
+        {{ field }}
+        <small class="form-text text-muted">{{ field.help_text }}</small>
+      </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </div>
+  </form>
+{% endblock %}
