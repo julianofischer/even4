@@ -99,7 +99,7 @@ def __save_anais(request, commit=True):
     anais.idioma_de_publicacao = idioma_de_publicacao
     anais.pais_de_publicacao = pais_de_publicacao
     tz = get_current_timezone()
-    dt = tz.localize(datetime.strptime(data_de_publicacao, '%Y-%m-%d'))
+    dt = tz.localize(datetime.strptime(data_de_publicacao, '%d-%m-%Y'))
     anais.data_de_publicacao = dt
     anais.save()
     return anais
