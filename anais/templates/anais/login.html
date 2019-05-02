@@ -5,7 +5,7 @@ Criar um novo evento
 {% endblock %}
 
 {% block content %}
-<div class="container d-flex justify-content-center align-self-center">
+<div class="container d-flex justify-content-center  align-items-center" style="height:60%">
     <form class="form-signin" method="post"> {% csrf_token %}
       <h1 class="h3 mb-3 font-weight-normal">Por favor, autentique-se</h1>
       <label for="inputEmail" class="sr-only">Nome de usuário</label>
@@ -19,5 +19,5 @@ Criar um novo evento
       </div>-->
       <button class="btn btn-lg btn-primary btn-block mt-2" type="submit">Autenticar</button>
     </form>
-  </div>
+</div>
   {% endblock %}
