@@ -1,0 +1,23 @@
+{% extends 'anais/base.html' %}
+
+{% block title %}
+Criar um novo evento
+{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-self-center">
+    <form class="form-signin" method="post"> {% csrf_token %}
+      <h1 class="h3 mb-3 font-weight-normal">Por favor, autentique-se</h1>
+      <label for="inputEmail" class="sr-only">Nome de usuário</label>
+      <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Nome de usuário" required autofocus>
+      <label for="inputPassword" class="sr-only">senha</label>
+      <input type="password" id="inputPassword" name="password" class="form-control mt-1" placeholder="Password" required>
+      <!--<div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div>-->
+      <button class="btn btn-lg btn-primary btn-block mt-2" type="submit">Autenticar</button>
+    </form>
+  </div>
+  {% endblock %}

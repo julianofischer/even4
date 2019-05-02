@@ -28,7 +28,9 @@ Página Home
   <div class="container">
     <div class="d-flex justify-content-between container pt-2 pb-2">
       <h2>Anais de Eventos</h2>
+      {% if user.is_authenticated %}
       <h4 class="text-primary"><a href="{% url 'adicionar_evento' %}">Criar um evento</a></h4>
+      {% endif %}
     </div>
 
     <div class="d-flex flex-row-reverse pb-3">

@@ -104,6 +104,8 @@ def __save_anais(request, commit=True):
     anais.save()
     return anais
 
+from django.contrib.auth.decorators import login_required
+@login_required
 def adicionar_evento(request):
     saved = False
     print(request.FILES)
@@ -140,7 +142,7 @@ def adicionar_modelform(request):
         context = {'anais_form':anais_form, 'evento_form':evento_form}
         return render(request, 'anais/adicionar_modelform.html', context)
 
-def adicionar_modelform(request):
+def adicionar_modelform2(request):
     if request.method == 'POST':
         anais_form = AnaisForm(request.POST)
         evento_form = EventoForm(request.POST, request.FILES)
@@ -159,3 +161,21 @@ def adicionar_modelform(request):
         evento_form = EventoForm()
         context = {'anais_form':anais_form, 'evento_form':evento_form}
         return render(request, 'anais/adicionar_modelform2.html', context)
+
+
+from django.contrib.auth import authenticate, login, logout
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('/')
+    else:
+        return render(request, 'anais/login.html', {'error':'Usuário ou senha inválido(s)'})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect("/")
